@@ -6,25 +6,25 @@ void main() {
     test('Case 1: W=0.55, R=2.0 -> f* = 0.325 (32.50%)', () {
       final fStar = calculateKellyFraction(0.55, 2.0);
       expect(fStar, closeTo(0.325, 0.0001));
-      expect(getRiskInterpretation(fStar * 100), contains('Aggressive'));
+      expect(getRiskCategory(fStar), contains('Aggressive'));
     });
 
     test('Case 2: W=0.40, R=3.0 -> f* = 0.200 (20.00%)', () {
       final fStar = calculateKellyFraction(0.40, 3.0);
       expect(fStar, closeTo(0.200, 0.0001));
-      expect(getRiskInterpretation(fStar * 100), contains('Moderate'));
+      expect(getRiskCategory(fStar), contains('Moderate'));
     });
 
     test('Case 3: W=0.50, R=1.0 -> f* = 0.000 (0.00% / No Edge)', () {
       final fStar = calculateKellyFraction(0.50, 1.0);
       expect(fStar, closeTo(0.0, 0.0001));
-      expect(getRiskInterpretation(fStar * 100), contains('DO NOT INVEST'));
+      expect(getRiskCategory(fStar), contains('No Edge'));
     });
 
     test('Case 4: W=0.30, R=1.0 -> f* = -0.400 (Negative Edge)', () {
       final fStar = calculateKellyFraction(0.30, 1.0);
       expect(fStar, closeTo(-0.400, 0.0001));
-      expect(getRiskInterpretation(fStar * 100), contains('DO NOT INVEST'));
+      expect(getRiskCategory(fStar), contains('No Edge'));
     });
   });
 }

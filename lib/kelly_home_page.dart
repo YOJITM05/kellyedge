@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'calculation_engine.dart';
 
 class KellyHomePage extends StatefulWidget {
   const KellyHomePage({super.key});
@@ -27,28 +28,8 @@ class _KellyHomePageState extends State<KellyHomePage> {
   final List<Map<String, dynamic>> history = [];
 
   // =========================================================
-  // CALCULATION LAYER
-  // f* = W - (1 - W) / R
+  // DECISION LAYER (risk bands live in calculation_engine.dart)
   // =========================================================
-  double calculateKellyFraction(double W, double R) {
-    return W - (1 - W) / R;
-  }
-
-  // =========================================================
-  // DECISION LAYER
-  // =========================================================
-  String getRiskCategory(double fraction) {
-    if (fraction <= 0) {
-      return 'No Edge – Avoid Bet';
-    } else if (fraction <= 0.10) {
-      return 'Conservative – Small Bet';
-    } else if (fraction <= 0.25) {
-      return 'Moderate – Balanced Bet';
-    } else {
-      return 'Aggressive – High Bet';
-    }
-  }
-
   Color getRiskColor(String category) {
     if (category.startsWith('No Edge')) {
       return Colors.red;
@@ -59,13 +40,6 @@ class _KellyHomePageState extends State<KellyHomePage> {
     } else {
       return Colors.green;
     }
-  }
-
-  double calculateSuggestedStake(double fraction, double bankroll) {
-    if (fraction <= 0) {
-      return 0;
-    }
-    return fraction * bankroll;
   }
 
   // =========================================================
